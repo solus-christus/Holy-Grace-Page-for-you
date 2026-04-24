@@ -6,9 +6,8 @@
 
   <title>홀리 그레이스, 당신을 위한 페이지</title>
 
-  <!-- 공유 미리보기 설정 -->
   <meta property="og:title" content="홀리 그레이스, 당신을 위한 페이지" />
-  <meta property="og:description" content="다가올 전체모임, 지난 사역, 이번 주 설교, 셀 모임 나눔지를 한눈에 확인하세요." />
+  <meta property="og:description" content="다가올 전체모임, 설교, 나눔지를 한눈에 확인하세요." />
   <meta property="og:image" content="https://solus-christus.github.io/Holy-Grace-Page-for-you/images/poster.jpg" />
   <meta property="og:url" content="https://solus-christus.github.io/Holy-Grace-Page-for-you/" />
   <meta property="og:type" content="website" />
@@ -39,13 +38,11 @@
       margin: 0;
       font-size: 32px;
       font-weight: 800;
-      line-height: 1.35;
     }
 
     .hero span {
       display: block;
       font-size: 18px;
-      font-weight: 500;
       margin-top: 6px;
       color: #666;
     }
@@ -62,10 +59,28 @@
     }
 
     img {
+      width: 100%;
       display: block;
-      max-width: 100%;
-      height: auto;
       cursor: pointer;
+    }
+
+    .image-wrap,
+    .video-card,
+    .group-preview-img {
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .image-wrap img,
+    .video-card img,
+    .group-preview-img img {
+      transition: transform 0.25s ease;
+    }
+
+    .image-wrap:hover img,
+    .video-card:hover img,
+    .group-preview-img:hover img {
+      transform: scale(1.05);
     }
 
     .grid {
@@ -75,42 +90,20 @@
     }
 
     .video-card {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
+      display: block;
       text-decoration: none;
       color: black;
-      display: block;
-    }
-
-    .poster-image-wrap,
-    .video-card,
-    .group-preview img,
-    .btn,
-    .download-btn,
-    .top-btn {
-      transition: transform 0.12s ease, opacity 0.12s ease;
-    }
-
-    .poster-image-wrap:active,
-    .video-card:active,
-    .group-preview img:active,
-    .btn:active,
-    .download-btn:active,
-    .top-btn:active {
-      transform: scale(0.96);
-      opacity: 0.85;
     }
 
     .btn {
       background: black;
       color: white;
-      text-align: center;
       padding: 10px;
+      text-align: center;
       text-decoration: none;
       display: block;
-      font-weight: bold;
       border-radius: 10px;
+      font-weight: bold;
     }
 
     .kakao-btn {
@@ -125,73 +118,76 @@
       padding: 0 16px 16px;
     }
 
-    .group-preview img {
-      width: 100%;
+    .group-preview-img img {
       height: 180px;
       object-fit: cover;
       object-position: top;
+    }
+
+    .sermon-video {
+      width: 100%;
+      aspect-ratio: 16/9;
       border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
     }
 
     .modal {
       display: none;
       position: fixed;
+      background: rgba(0,0,0,0.85);
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
       z-index: 999;
       left: 0;
       top: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.85);
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      box-sizing: border-box;
     }
 
     .modal-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       max-width: 100%;
-      max-height: 100%;
+      text-align: center;
     }
 
     .modal img {
       max-width: 100%;
-      max-height: 82vh;
+      max-height: 80vh;
       width: auto;
       height: auto;
-      object-fit: contain;
       cursor: default;
       border-radius: 12px;
     }
 
     .download-btn {
-      margin-top: 12px;
+      margin-top: 10px;
       background: white;
-      color: black;
       padding: 10px 16px;
       border-radius: 10px;
       text-decoration: none;
+      color: black;
+      display: inline-block;
       font-weight: bold;
-      font-size: 14px;
     }
 
     .top-btn {
       position: fixed;
-      right: 18px;
-      bottom: 18px;
+      right: 20px;
+      bottom: 20px;
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      border: none;
-      background: #111;
+      background: black;
       color: white;
+      border: none;
       font-size: 20px;
-      font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-      z-index: 500;
     }
   </style>
 </head>
@@ -210,22 +206,24 @@
       <div class="section">
         <h3>다가올 전체모임</h3>
       </div>
-      <div class="poster-image-wrap" onclick="openModal('images/poster.jpg')">
-        <img src="images/poster.jpg" alt="메인 포스터">
+      <div class="image-wrap" onclick="openModal('images/poster.jpg')">
+        <img src="images/poster.jpg" alt="다가올 전체모임 포스터">
       </div>
     </div>
 
     <div class="card section">
-      <h3>지난 사역</h3>
+      <h3>지난 사역 돌아보기</h3>
       <div class="grid" id="videoGrid"></div>
     </div>
 
     <div class="card section">
       <h3>이번 주 설교</h3>
-      <a class="video-card" href="https://www.youtube.com/watch?v=REPUe3-pcpk" target="_blank" rel="noopener noreferrer">
-        <img src="https://img.youtube.com/vi/REPUe3-pcpk/maxresdefault.jpg" alt="이번 주 설교 썸네일">
-        <div class="btn">설교 영상 보기</div>
-      </a>
+      <div class="sermon-video">
+        <iframe
+          src="https://www.youtube.com/embed/videoseries?list=PLf7eFhhHay759LzayhGhfnf1EKK6GjNSJ"
+          allowfullscreen>
+        </iframe>
+      </div>
     </div>
 
     <div class="card">
@@ -234,39 +232,43 @@
       </div>
 
       <div class="group-preview">
-        <img src="images/group1.jpg" onclick="openModal('images/group1.jpg')" alt="나눔지 1">
-        <img src="images/group2.jpg" onclick="openModal('images/group2.jpg')" alt="나눔지 2">
+        <div class="group-preview-img" onclick="openModal('images/group1.jpg')">
+          <img src="images/group1.jpg" alt="나눔지 1">
+        </div>
+
+        <div class="group-preview-img" onclick="openModal('images/group2.jpg')">
+          <img src="images/group2.jpg" alt="나눔지 2">
+        </div>
       </div>
     </div>
 
     <div class="card section">
       <h3>담당교역자 문의</h3>
 
-      <p style="margin-bottom:12px;">
+      <p>
         황지후 목사<br>
         010-9798-6947
       </p>
 
-      <a class="btn" href="tel:01097986947">
-        전화하기
-      </a>
+      <a class="btn" href="tel:01097986947">전화하기</a>
 
       <a class="btn kakao-btn"
          href="https://qr.kakao.com/talk/DYfdZ.5cvj0rMZYvXZOHLnIXGiU-"
          target="_blank"
          rel="noopener noreferrer"
          style="margin-top:8px;">
-        카카오톡으로 문의하기
+        카카오톡 문의
       </a>
     </div>
 
   </div>
 
-  <button class="top-btn" onclick="scrollToTop()">↑</button>
+  <button class="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
   <div id="imageModal" class="modal" onclick="closeModal()">
     <div class="modal-content" onclick="event.stopPropagation()">
       <img id="modalImage" src="" alt="확대 이미지">
+      <br>
       <a id="downloadBtn" class="download-btn" download>다운로드</a>
     </div>
   </div>
@@ -274,47 +276,28 @@
   <script>
     function openModal(src) {
       document.getElementById("modalImage").src = src;
+      document.getElementById("downloadBtn").href = src;
+      document.getElementById("downloadBtn").setAttribute("download", src.split("/").pop());
       document.getElementById("imageModal").style.display = "flex";
-
-      const downloadBtn = document.getElementById("downloadBtn");
-      downloadBtn.href = src;
-      downloadBtn.setAttribute("download", src.split("/").pop());
     }
 
     function closeModal() {
       document.getElementById("imageModal").style.display = "none";
     }
 
-    function scrollToTop() {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    }
-
     const videos = [
-      "https://www.youtube.com/watch?v=8NuUE9hktHQ",
-      "https://www.youtube.com/watch?v=dDABgYxqRBs",
-      "https://www.youtube.com/watch?v=BUZNMMJHhV8",
-      "https://www.youtube.com/watch?v=4vtLpKlUjp8"
+      "8NuUE9hktHQ",
+      "dDABgYxqRBs",
+      "BUZNMMJHhV8",
+      "4vtLpKlUjp8"
     ];
 
-    const grid = document.getElementById("videoGrid");
-
-    videos.forEach(url => {
-      const videoId = new URL(url).searchParams.get("v");
-
-      const card = document.createElement("a");
-      card.className = "video-card";
-      card.href = url;
-      card.target = "_blank";
-      card.rel = "noopener noreferrer";
-
-      card.innerHTML = `
-        <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg" alt="지난 사역 영상 썸네일">
+    videos.forEach(id => {
+      videoGrid.innerHTML += `
+        <a class="video-card" href="https://youtube.com/watch?v=${id}" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.youtube.com/vi/${id}/maxresdefault.jpg" alt="지난 사역 영상 썸네일">
+        </a>
       `;
-
-      grid.appendChild(card);
     });
   </script>
 
