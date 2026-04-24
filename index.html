@@ -92,6 +92,7 @@
       text-decoration: none;
       display: block;
       font-weight: bold;
+      border-radius: 10px;
     }
 
     .group-preview {
@@ -125,13 +126,33 @@
       box-sizing: border-box;
     }
 
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 100%;
+      max-height: 100%;
+    }
+
     .modal img {
       max-width: 100%;
-      max-height: 90%;
+      max-height: 82vh;
       width: auto;
       height: auto;
       object-fit: contain;
       cursor: default;
+      border-radius: 12px;
+    }
+
+    .download-btn {
+      margin-top: 12px;
+      background: white;
+      color: black;
+      padding: 10px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -160,7 +181,7 @@
 
     <div class="card section">
       <h3>이번 주 설교</h3>
-      <a href="https://www.youtube.com/watch?v=REPUe3-pcpk" target="_blank">
+      <a href="https://www.youtube.com/watch?v=REPUe3-pcpk" target="_blank" rel="noopener noreferrer">
         <img src="https://img.youtube.com/vi/REPUe3-pcpk/maxresdefault.jpg" alt="이번 주 설교 썸네일">
         <div class="btn">설교 영상 보기</div>
       </a>
@@ -180,13 +201,20 @@
   </div>
 
   <div id="imageModal" class="modal" onclick="closeModal()">
-    <img id="modalImage" src="">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <img id="modalImage" src="" alt="확대 이미지">
+      <a id="downloadBtn" class="download-btn" download>다운로드</a>
+    </div>
   </div>
 
   <script>
     function openModal(src) {
       document.getElementById("modalImage").src = src;
       document.getElementById("imageModal").style.display = "flex";
+
+      const downloadBtn = document.getElementById("downloadBtn");
+      downloadBtn.href = src;
+      downloadBtn.setAttribute("download", src.split("/").pop());
     }
 
     function closeModal() {
