@@ -1,129 +1,138 @@
-const pastMinistryVideos = [
-  {
-    title: "최근 사역 영상",
-    youtubeUrl: "https://www.youtube.com/watch?v=8NuUE9hktHQ",
-    thumbnailUrl: "https://img.youtube.com/vi/8NuUE9hktHQ/maxresdefault.jpg",
-  },
-  {
-    title: "사역 영상",
-    youtubeUrl: "https://www.youtube.com/watch?v=dDABgYxqRBs",
-    thumbnailUrl: "https://img.youtube.com/vi/dDABgYxqRBs/maxresdefault.jpg",
-  },
-  {
-    title: "사역 영상",
-    youtubeUrl: "https://www.youtube.com/watch?v=BUZNMMJHhV8",
-    thumbnailUrl: "https://img.youtube.com/vi/BUZNMMJHhV8/maxresdefault.jpg",
-  },
-  {
-    title: "사역 영상",
-    youtubeUrl: "https://www.youtube.com/watch?v=4vtLpKlUjp8",
-    thumbnailUrl: "https://img.youtube.com/vi/4vtLpKlUjp8/maxresdefault.jpg",
-  },
-];
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>홀리 그레이스</title>
 
-export default function ChurchLandingPagePreview() {
-  return (
-    <main className="min-h-screen bg-neutral-100 text-neutral-900">
-      <section className="mx-auto max-w-md px-4 py-6">
-        <div className="mb-5 text-center">
-          
-          <h1 className="mt-1 text-3xl font-extrabold tracking-tight">홀리 그레이스, 당신을 위한 페이지</h1>
-          
-        </div>
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f5f5f5;
+      color: #111;
+    }
 
-        {/* 메인 포스터 */}
-        <div className="overflow-hidden rounded-3xl bg-white shadow-sm">
-          <div className="flex aspect-[4/5] items-center justify-center bg-gradient-to-br from-pink-200 via-rose-100 to-orange-100 p-6 text-center">
-            <div>
-              <p className="text-sm font-semibold text-rose-600">MAIN POSTER</p>
-              <h2 className="mt-3 text-3xl font-black leading-tight">다가올 사역<br />메인 포스터</h2>
-              <p className="mt-4 text-sm text-neutral-700">여기에 포스터 이미지가 크게 들어갑니다</p>
-            </div>
-          </div>
-        </div>
+    .container {
+      max-width: 420px;
+      margin: auto;
+      padding: 16px;
+    }
 
-        {/* 지난 사역 돌아보기 */}
-        <section className="mt-5 rounded-3xl bg-white p-5 shadow-sm">
-          <div className="mb-4">
-            <p className="text-sm font-semibold text-neutral-500">지난 사역 돌아보기</p>
-            <h2 className="mt-1 text-xl font-bold">사역 영상 모아보기</h2>
-          </div>
+    h1 {
+      text-align: center;
+      font-size: 26px;
+      margin-bottom: 20px;
+      font-weight: 800;
+    }
 
-          <div className="grid grid-cols-2 gap-3">
-            {pastMinistryVideos.map((video, index) => (
-              <a
-                key={index}
-                href={video.youtubeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="overflow-hidden rounded-2xl border bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
-              >
-                <div className="aspect-video bg-neutral-200">
-                  <img
-                    src={video.thumbnailUrl}
-                    alt={video.title}
-                    className="h-full w-full object-cover"
-                    onError={(event) => {
-                      event.currentTarget.style.display = "none";
-                    }}
-                  />
-                </div>
-                <div className="p-2">
-                  <p className="line-clamp-2 text-xs font-semibold leading-snug">
-                    {video.title}
-                  </p>
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
+    .card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
 
-        {/* 이번 주 설교 */}
-        <section className="mt-5 rounded-3xl bg-white p-5 shadow-sm">
-          <p className="text-sm font-semibold text-neutral-500">이번 주 설교</p>
-          <h2 className="mt-1 text-xl font-bold">믿음으로 오늘을 살아가라</h2>
-          <p className="mt-2 text-sm text-neutral-600">본문: 에스더 1:1-12</p>
+    .section {
+      padding: 16px;
+    }
 
-          <a
-            href="https://www.youtube.com/watch?v=REPUe3-pcpk"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 block overflow-hidden rounded-2xl border"
-          >
-            <div className="aspect-video bg-neutral-200">
-              <img
-                src="https://img.youtube.com/vi/REPUe3-pcpk/maxresdefault.jpg"
-                alt="설교 썸네일"
-                className="h-full w-full object-cover"
-                onError={(event) => {
-                  event.currentTarget.style.display = "none";
-                }}
-              />
-            </div>
-            <div className="bg-neutral-900 py-2 text-center text-sm font-semibold text-white">
-              설교 영상 보기
-            </div>
-          </a>
-        </section>
+    img {
+      width: 100%;
+      display: block;
+    }
 
-        {/* 소그룹 순서지 */}
-        <section className="mt-5 rounded-3xl bg-white p-5 shadow-sm">
-          <div className="mb-3 flex items-end justify-between">
-            <div>
-              <p className="text-sm font-semibold text-neutral-500">소그룹 순서지</p>
-              <h2 className="mt-1 text-xl font-bold">이번주 셀 모임 나눔지</h2>
-            </div>
-            <span className="text-xs text-neutral-400">이미지</span>
-          </div>
-          <div className="flex aspect-[3/4] items-center justify-center rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 p-5 text-center text-sm text-neutral-500">
-            소그룹 순서지 이미지가<br />여기에 들어갑니다
-          </div>
-        </section>
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
 
-        <footer className="mt-8 text-center text-xs text-neutral-400">
-          © Sungmoon Church Youth Ministry
-        </footer>
-      </section>
-    </main>
-  );
-}
+    .video-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      text-decoration: none;
+      color: black;
+    }
+
+    .video-title {
+      font-size: 12px;
+      padding: 6px;
+      line-height: 1.3;
+    }
+
+    .btn {
+      background: black;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      text-decoration: none;
+      display: block;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <h1>홀리 그레이스, 당신을 위한 페이지</h1>
+
+    <!-- 메인 포스터 -->
+    <div class="card">
+      <img src="images/poster.jpg" alt="메인 포스터">
+    </div>
+
+    <!-- 지난 사역 -->
+    <div class="card section">
+      <h3>지난 사역</h3>
+
+      <div class="grid">
+
+        <a class="video-card" href="https://www.youtube.com/watch?v=8NuUE9hktHQ" target="_blank">
+          <img src="https://img.youtube.com/vi/8NuUE9hktHQ/maxresdefault.jpg">
+          <div class="video-title">최근 사역</div>
+        </a>
+
+        <a class="video-card" href="https://www.youtube.com/watch?v=dDABgYxqRBs" target="_blank">
+          <img src="https://img.youtube.com/vi/dDABgYxqRBs/maxresdefault.jpg">
+          <div class="video-title">사역 영상</div>
+        </a>
+
+        <a class="video-card" href="https://www.youtube.com/watch?v=BUZNMMJHhV8" target="_blank">
+          <img src="https://img.youtube.com/vi/BUZNMMJHhV8/maxresdefault.jpg">
+          <div class="video-title">사역 영상</div>
+        </a>
+
+        <a class="video-card" href="https://www.youtube.com/watch?v=4vtLpKlUjp8" target="_blank">
+          <img src="https://img.youtube.com/vi/4vtLpKlUjp8/maxresdefault.jpg">
+          <div class="video-title">사역 영상</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- 이번 주 설교 -->
+    <div class="card section">
+      <h3>이번 주 설교</h3>
+
+      <a href="https://www.youtube.com/watch?v=REPUe3-pcpk" target="_blank">
+        <img src="https://img.youtube.com/vi/REPUe3-pcpk/maxresdefault.jpg">
+        <div class="btn">설교 영상 보기</div>
+      </a>
+    </div>
+
+    <!-- 셀 모임 나눔지 -->
+    <div class="card">
+      <div class="section">
+        <h3>이번주 셀 모임 나눔지</h3>
+      </div>
+
+      <img src="images/group1.jpg" alt="나눔지 1">
+      <img src="images/group2.jpg" alt="나눔지 2">
+    </div>
+
+  </div>
+</body>
+</html>
