@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>홀리 그레이스</title>
+
+  <title>홀리 그레이스, 당신을 위한 페이지</title>
+
+  <!-- 공유 미리보기 설정 -->
+  <meta property="og:title" content="홀리 그레이스, 당신을 위한 페이지" />
+  <meta property="og:description" content="다가올 전체모임, 지난 사역, 이번 주 설교, 셀 모임 나눔지를 한눈에 확인하세요." />
+  <meta property="og:image" content="https://solus-christus.github.io/Holy-Grace-Page-for-you/images/poster.jpg" />
+  <meta property="og:url" content="https://solus-christus.github.io/Holy-Grace-Page-for-you/" />
+  <meta property="og:type" content="website" />
 
   <style>
     body {
@@ -66,12 +74,6 @@
       gap: 10px;
     }
 
-    .video-card,
-    .poster-image-wrap,
-    .group-preview img {
-      transition: transform 0.25s ease;
-    }
-
     .video-card {
       background: white;
       border-radius: 12px;
@@ -81,28 +83,23 @@
       display: block;
     }
 
-    .poster-image-wrap {
-      overflow: hidden;
-    }
-
-    .poster-image-wrap img,
-    .video-card img,
-    .group-preview img {
-      transition: transform 0.25s ease;
-    }
-
-    .poster-image-wrap:hover img,
-    .video-card:hover img,
-    .group-preview img:hover {
-      transform: scale(1.1);
+    .poster-image-wrap,
+    .video-card,
+    .group-preview img,
+    .btn,
+    .download-btn,
+    .top-btn {
+      transition: transform 0.12s ease, opacity 0.12s ease;
     }
 
     .poster-image-wrap:active,
     .video-card:active,
     .group-preview img:active,
     .btn:active,
-    .download-btn:active {
+    .download-btn:active,
+    .top-btn:active {
       transform: scale(0.96);
+      opacity: 0.85;
     }
 
     .btn {
@@ -114,7 +111,6 @@
       display: block;
       font-weight: bold;
       border-radius: 10px;
-      transition: transform 0.15s ease;
     }
 
     .kakao-btn {
@@ -127,7 +123,6 @@
       grid-template-columns: 1fr 1fr;
       gap: 8px;
       padding: 0 16px 16px;
-      overflow: hidden;
     }
 
     .group-preview img {
@@ -180,7 +175,23 @@
       text-decoration: none;
       font-weight: bold;
       font-size: 14px;
-      transition: transform 0.15s ease;
+    }
+
+    .top-btn {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background: #111;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      z-index: 500;
     }
   </style>
 </head>
@@ -251,6 +262,8 @@
 
   </div>
 
+  <button class="top-btn" onclick="scrollToTop()">↑</button>
+
   <div id="imageModal" class="modal" onclick="closeModal()">
     <div class="modal-content" onclick="event.stopPropagation()">
       <img id="modalImage" src="" alt="확대 이미지">
@@ -270,6 +283,13 @@
 
     function closeModal() {
       document.getElementById("imageModal").style.display = "none";
+    }
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
     }
 
     const videos = [
