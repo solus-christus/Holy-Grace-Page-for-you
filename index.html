@@ -6,8 +6,9 @@
 
   <title>홀리 그레이스, 당신을 위한 페이지</title>
 
+  <!-- 카카오톡/링크 공유 미리보기 -->
   <meta property="og:title" content="홀리 그레이스, 당신을 위한 페이지" />
-  <meta property="og:description" content="다가올 전체모임, 설교, 나눔지를 한눈에 확인하세요." />
+  <meta property="og:description" content="다가올 전체모임, 설교, 셀 모임 나눔지를 한눈에 확인하세요." />
   <meta property="og:image" content="https://solus-christus.github.io/Holy-Grace-Page-for-you/images/poster.jpg" />
   <meta property="og:url" content="https://solus-christus.github.io/Holy-Grace-Page-for-you/" />
   <meta property="og:type" content="website" />
@@ -27,11 +28,8 @@
     }
 
     .hero {
-      position: relative;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.9), transparent 28%),
-        linear-gradient(135deg, #ffdce8, #fff5dc);
+      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.9), transparent 28%),
+                  linear-gradient(135deg, #ffdce8, #fff5dc);
       border-radius: 28px;
       padding: 38px 18px;
       text-align: center;
@@ -166,7 +164,8 @@
       align-items: center;
       gap: 14px;
       margin: 0 auto 14px;
-      max-width: 260px;
+      max-width: 270px;
+      justify-content: center;
     }
 
     .profile-img {
@@ -185,7 +184,6 @@
     }
 
     .contact-info {
-      flex: 1;
       text-align: left;
     }
 
@@ -218,11 +216,32 @@
       border-radius: 12px;
       font-weight: 800;
       font-size: 14px;
+      border: none;
+      cursor: pointer;
+      box-sizing: border-box;
     }
 
     .kakao-btn {
       background: #FEE500;
       color: #000;
+    }
+
+    .install-options {
+      display: none;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .install-options.show {
+      display: grid;
+    }
+
+    .install-note {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #555;
+      margin: 0 0 12px;
     }
 
     .modal {
@@ -243,6 +262,26 @@
     .modal-content {
       max-width: 100%;
       text-align: center;
+    }
+
+    .guide-box {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      max-width: 340px;
+      text-align: left;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.25);
+    }
+
+    .guide-box h3 {
+      margin: 0 0 12px;
+    }
+
+    .guide-box p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #333;
     }
 
     .modal img {
@@ -278,6 +317,7 @@
       font-size: 20px;
       cursor: pointer;
       box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+      z-index: 500;
     }
   </style>
 </head>
@@ -364,6 +404,23 @@
       </div>
     </div>
 
+    <div class="card section">
+      <h3 class="section-title">빠르게 접속하기</h3>
+
+      <p class="install-note">
+        홈 화면에 추가해두면 앱처럼 바로 접속할 수 있습니다.
+      </p>
+
+      <button class="btn" onclick="toggleInstallOptions()">
+        홈 화면에 추가하기
+      </button>
+
+      <div id="installOptions" class="install-options">
+        <button class="btn" onclick="showInstallGuide('android')">안드로이드</button>
+        <button class="btn" onclick="showInstallGuide('iphone')">아이폰</button>
+      </div>
+    </div>
+
   </div>
 
   <button class="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
@@ -373,6 +430,14 @@
       <img id="modalImage" src="" alt="확대 이미지">
       <br>
       <a id="downloadBtn" class="download-btn" download>다운로드</a>
+    </div>
+  </div>
+
+  <div id="installModal" class="modal" onclick="closeInstallGuide()">
+    <div class="guide-box" onclick="event.stopPropagation()">
+      <h3 id="installTitle">홈 화면 추가 방법</h3>
+      <p id="installText"></p>
+      <button class="btn" style="margin-top:14px;" onclick="closeInstallGuide()">닫기</button>
     </div>
   </div>
 
@@ -392,6 +457,36 @@
 
     function closeModal() {
       document.getElementById("imageModal").style.display = "none";
+    }
+
+    function toggleInstallOptions() {
+      document.getElementById("installOptions").classList.toggle("show");
+    }
+
+    function showInstallGuide(type) {
+      const title = document.getElementById("installTitle");
+      const text = document.getElementById("installText");
+
+      if (type === "android") {
+        title.innerText = "안드로이드 홈 화면 추가";
+        text.innerHTML =
+          "1. 오른쪽 위 점 세 개 메뉴를 누르세요.<br>" +
+          "2. <b>홈 화면에 추가</b> 또는 <b>앱 설치</b>를 누르세요.<br>" +
+          "3. 확인을 누르면 홈 화면에 아이콘이 생성됩니다.";
+      } else {
+        title.innerText = "아이폰 홈 화면 추가";
+        text.innerHTML =
+          "1. Safari에서 이 페이지를 여세요.<br>" +
+          "2. 하단의 <b>공유 버튼</b>을 누르세요.<br>" +
+          "3. <b>홈 화면에 추가</b>를 선택하세요.<br>" +
+          "4. 오른쪽 위 <b>추가</b>를 누르세요.";
+      }
+
+      document.getElementById("installModal").style.display = "flex";
+    }
+
+    function closeInstallGuide() {
+      document.getElementById("installModal").style.display = "none";
     }
 
     const videos = [
