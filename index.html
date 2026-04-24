@@ -66,22 +66,43 @@
       gap: 10px;
     }
 
+    .video-card,
+    .poster-image-wrap,
+    .group-preview img {
+      transition: transform 0.25s ease;
+    }
+
     .video-card {
       background: white;
       border-radius: 12px;
       overflow: hidden;
       text-decoration: none;
       color: black;
+      display: block;
     }
 
+    .poster-image-wrap {
+      overflow: hidden;
+    }
+
+    .poster-image-wrap img,
     .video-card img,
     .group-preview img {
       transition: transform 0.25s ease;
     }
 
+    .poster-image-wrap:hover img,
     .video-card:hover img,
     .group-preview img:hover {
-      transform: scale(1.05);
+      transform: scale(1.1);
+    }
+
+    .poster-image-wrap:active,
+    .video-card:active,
+    .group-preview img:active,
+    .btn:active,
+    .download-btn:active {
+      transform: scale(0.96);
     }
 
     .btn {
@@ -93,6 +114,12 @@
       display: block;
       font-weight: bold;
       border-radius: 10px;
+      transition: transform 0.15s ease;
+    }
+
+    .kakao-btn {
+      background: #FEE500;
+      color: #000;
     }
 
     .group-preview {
@@ -153,6 +180,7 @@
       text-decoration: none;
       font-weight: bold;
       font-size: 14px;
+      transition: transform 0.15s ease;
     }
   </style>
 </head>
@@ -171,7 +199,9 @@
       <div class="section">
         <h3>다가올 전체모임</h3>
       </div>
-      <img src="images/poster.jpg" alt="메인 포스터">
+      <div class="poster-image-wrap" onclick="openModal('images/poster.jpg')">
+        <img src="images/poster.jpg" alt="메인 포스터">
+      </div>
     </div>
 
     <div class="card section">
@@ -181,7 +211,7 @@
 
     <div class="card section">
       <h3>이번 주 설교</h3>
-      <a href="https://www.youtube.com/watch?v=REPUe3-pcpk" target="_blank" rel="noopener noreferrer">
+      <a class="video-card" href="https://www.youtube.com/watch?v=REPUe3-pcpk" target="_blank" rel="noopener noreferrer">
         <img src="https://img.youtube.com/vi/REPUe3-pcpk/maxresdefault.jpg" alt="이번 주 설교 썸네일">
         <div class="btn">설교 영상 보기</div>
       </a>
@@ -196,6 +226,27 @@
         <img src="images/group1.jpg" onclick="openModal('images/group1.jpg')" alt="나눔지 1">
         <img src="images/group2.jpg" onclick="openModal('images/group2.jpg')" alt="나눔지 2">
       </div>
+    </div>
+
+    <div class="card section">
+      <h3>담당교역자 문의</h3>
+
+      <p style="margin-bottom:12px;">
+        황지후 목사<br>
+        010-9798-6947
+      </p>
+
+      <a class="btn" href="tel:01097986947">
+        전화하기
+      </a>
+
+      <a class="btn kakao-btn"
+         href="https://qr.kakao.com/talk/DYfdZ.5cvj0rMZYvXZOHLnIXGiU-"
+         target="_blank"
+         rel="noopener noreferrer"
+         style="margin-top:8px;">
+        카카오톡으로 문의하기
+      </a>
     </div>
 
   </div>
