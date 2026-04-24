@@ -6,12 +6,10 @@
 
   <title>홀리 그레이스, 당신을 위한 페이지</title>
 
-  <!-- 폰트 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- 공유 -->
   <meta property="og:title" content="홀리 그레이스, 당신을 위한 페이지" />
   <meta property="og:description" content="다가올 전체모임, 설교, 셀 모임 나눔지를 한눈에 확인하세요." />
   <meta property="og:image" content="https://solus-christus.github.io/Holy-Grace-Page-for-you/images/poster.jpg" />
@@ -152,11 +150,13 @@
       font-weight: 800;
       padding: 4px 8px;
       border-radius: 999px;
+      z-index: 2;
     }
 
     .group-preview-img img {
       height: 180px;
       object-fit: cover;
+      object-position: top;
     }
 
     .contact-profile {
@@ -174,6 +174,8 @@
       border-radius: 50%;
       object-fit: cover;
       pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     .contact-info {
@@ -197,7 +199,6 @@
       margin-top: 12px;
     }
 
-    /* 버튼 업그레이드 */
     .btn {
       background: linear-gradient(135deg, #2f2a2a, #111);
       color: white;
@@ -229,11 +230,25 @@
       justify-content: center;
       align-items: center;
       z-index: 999;
+      left: 0;
+      top: 0;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
-    .modal img {
+    .modal-content {
+      max-width: 100%;
+      text-align: center;
+    }
+
+    .modal-content img {
       max-width: 100%;
       max-height: 80vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      cursor: default;
+      border-radius: 12px;
     }
 
     .download-btn {
@@ -243,6 +258,8 @@
       border-radius: 10px;
       text-decoration: none;
       color: black;
+      display: inline-block;
+      font-weight: bold;
     }
 
     .top-btn {
@@ -273,7 +290,7 @@
         <h3 class="section-title">다가올 전체모임</h3>
       </div>
       <div class="image-wrap" onclick="openModal('images/poster.jpg')">
-        <img src="images/poster.jpg">
+        <img src="images/poster.jpg" alt="다가올 전체모임 포스터">
       </div>
     </div>
 
@@ -285,7 +302,10 @@
     <div class="card section">
       <h3 class="section-title">이번 주 설교</h3>
       <div class="sermon-video">
-        <iframe src="https://www.youtube.com/embed/videoseries?list=PLf7eFhhHay759LzayhGhfnf1EKK6GjNSJ"></iframe>
+        <iframe
+          src="https://www.youtube.com/embed/videoseries?list=PLf7eFhhHay759LzayhGhfnf1EKK6GjNSJ"
+          allowfullscreen>
+        </iframe>
       </div>
     </div>
 
@@ -297,12 +317,12 @@
       <div class="group-preview">
         <div class="group-preview-img" onclick="openModal('images/group1.jpg')">
           <span class="page-label">1쪽</span>
-          <img src="images/group1.jpg">
+          <img src="images/group1.jpg" alt="나눔지 1">
         </div>
 
         <div class="group-preview-img" onclick="openModal('images/group2.jpg')">
           <span class="page-label">2쪽</span>
-          <img src="images/group2.jpg">
+          <img src="images/group2.jpg" alt="나눔지 2">
         </div>
       </div>
     </div>
@@ -311,7 +331,7 @@
       <h3 class="section-title">담당교역자 문의</h3>
 
       <div class="contact-profile">
-        <img class="profile-img" src="images/profile.jpg">
+        <img class="profile-img" src="images/profile.jpg" alt="황지후 목사 사진" draggable="false" oncontextmenu="return false;">
 
         <div class="contact-info">
           <div class="contact-name">황지후 목사</div>
@@ -321,7 +341,7 @@
 
       <div class="contact-buttons">
         <a class="btn" href="tel:01097986947">전화하기</a>
-        <a class="btn kakao-btn" href="https://qr.kakao.com/talk/DYfdZ.5cvj0rMZYvXZOHLnIXGiU-" target="_blank">
+        <a class="btn kakao-btn" href="https://qr.kakao.com/talk/DYfdZ.5cvj0rMZYvXZOHLnIXGiU-" target="_blank" rel="noopener noreferrer">
           카카오톡 문의
         </a>
       </div>
@@ -332,28 +352,41 @@
   <button class="top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
   <div id="imageModal" class="modal" onclick="closeModal()">
-    <img id="modalImage">
-    <br>
-    <a id="downloadBtn" class="download-btn" download>다운로드</a>
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <img id="modalImage" src="" alt="확대 이미지">
+      <br>
+      <a id="downloadBtn" class="download-btn" download>다운로드</a>
+    </div>
   </div>
 
   <script>
     function openModal(src) {
+      const modal = document.getElementById("imageModal");
+      const modalImage = document.getElementById("modalImage");
+      const downloadBtn = document.getElementById("downloadBtn");
+
       modalImage.src = src;
       downloadBtn.href = src;
-      imageModal.style.display = "flex";
+      downloadBtn.setAttribute("download", src.split("/").pop());
+
+      modal.style.display = "flex";
     }
 
     function closeModal() {
-      imageModal.style.display = "none";
+      const modal = document.getElementById("imageModal");
+      const modalImage = document.getElementById("modalImage");
+
+      modal.style.display = "none";
+      modalImage.src = "";
     }
 
     const videos = ["8NuUE9hktHQ","dDABgYxqRBs","BUZNMMJHhV8","4vtLpKlUjp8"];
+    const videoGrid = document.getElementById("videoGrid");
 
     videos.forEach(id => {
       videoGrid.innerHTML += `
-        <a class="video-card" href="https://youtube.com/watch?v=${id}" target="_blank">
-          <img src="https://img.youtube.com/vi/${id}/maxresdefault.jpg">
+        <a class="video-card" href="https://youtube.com/watch?v=${id}" target="_blank" rel="noopener noreferrer">
+          <img src="https://img.youtube.com/vi/${id}/maxresdefault.jpg" alt="지난 사역 영상 썸네일">
         </a>`;
     });
   </script>
