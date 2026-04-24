@@ -19,11 +19,28 @@
       padding: 16px;
     }
 
-    h1 {
+    /* 히어로 제목 */
+    .hero {
+      background: linear-gradient(135deg, #ffe4ec, #fff7e6);
+      border-radius: 24px;
+      padding: 28px 16px;
       text-align: center;
-      font-size: 26px;
       margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: 26px;
       font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .hero span {
+      display: block;
+      font-size: 16px;
+      font-weight: 500;
+      margin-top: 6px;
+      color: #666;
     }
 
     .card {
@@ -38,8 +55,9 @@
     }
 
     img {
-      width: 100%;
       display: block;
+      max-width: 100%;
+      height: auto;
       cursor: pointer;
     }
 
@@ -73,7 +91,23 @@
       font-weight: bold;
     }
 
-    /* 이미지 확대 모달 */
+    /* 나눔지 미리보기 */
+    .group-preview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 0 16px 16px;
+    }
+
+    .group-preview img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 12px;
+    }
+
+    /* 이미지 확대 */
     .modal {
       display: none;
       position: fixed;
@@ -92,7 +126,9 @@
     .modal img {
       max-width: 100%;
       max-height: 90%;
-      border-radius: 12px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
     }
   </style>
 </head>
@@ -100,7 +136,13 @@
 <body>
   <div class="container">
 
-    <h1>홀리 그레이스, 당신을 위한 페이지</h1>
+    <!-- 상단 제목 -->
+    <div class="hero">
+      <h1>
+        홀리 그레이스<br>
+        <span>당신을 위한 페이지</span>
+      </h1>
+    </div>
 
     <!-- 메인 포스터 -->
     <div class="card">
@@ -110,36 +152,12 @@
     <!-- 지난 사역 -->
     <div class="card section">
       <h3>지난 사역</h3>
-
-      <div class="grid">
-
-        <a class="video-card" href="https://www.youtube.com/watch?v=8NuUE9hktHQ" target="_blank">
-          <img src="https://img.youtube.com/vi/8NuUE9hktHQ/maxresdefault.jpg">
-          <div class="video-title">최근 사역 영상</div>
-        </a>
-
-        <a class="video-card" href="https://www.youtube.com/watch?v=dDABgYxqRBs" target="_blank">
-          <img src="https://img.youtube.com/vi/dDABgYxqRBs/maxresdefault.jpg">
-          <div class="video-title">사역 영상</div>
-        </a>
-
-        <a class="video-card" href="https://www.youtube.com/watch?v=BUZNMMJHhV8" target="_blank">
-          <img src="https://img.youtube.com/vi/BUZNMMJHhV8/maxresdefault.jpg">
-          <div class="video-title">사역 영상</div>
-        </a>
-
-        <a class="video-card" href="https://www.youtube.com/watch?v=4vtLpKlUjp8" target="_blank">
-          <img src="https://img.youtube.com/vi/4vtLpKlUjp8/maxresdefault.jpg">
-          <div class="video-title">사역 영상</div>
-        </a>
-
-      </div>
+      <div class="grid" id="videoGrid"></div>
     </div>
 
     <!-- 이번 주 설교 -->
     <div class="card section">
       <h3>이번 주 설교</h3>
-
       <a href="https://www.youtube.com/watch?v=REPUe3-pcpk" target="_blank">
         <img src="https://img.youtube.com/vi/REPUe3-pcpk/maxresdefault.jpg">
         <div class="btn">설교 영상 보기</div>
@@ -152,13 +170,15 @@
         <h3>이번주 셀 모임 나눔지</h3>
       </div>
 
-      <img src="images/group1.jpg" onclick="openModal('images/group1.jpg')">
-      <img src="images/group2.jpg" onclick="openModal('images/group2.jpg')">
+      <div class="group-preview">
+        <img src="images/group1.jpg" onclick="openModal('images/group1.jpg')">
+        <img src="images/group2.jpg" onclick="openModal('images/group2.jpg')">
+      </div>
     </div>
 
   </div>
 
-  <!-- 모달 -->
+  <!-- 이미지 확대 모달 -->
   <div id="imageModal" class="modal" onclick="closeModal()">
     <img id="modalImage" src="">
   </div>
@@ -172,6 +192,49 @@
     function closeModal() {
       document.getElementById("imageModal").style.display = "none";
     }
+
+    // 유튜브 자동 제목
+    const videos = [
+      "https://www.youtube.com/watch?v=8NuUE9hktHQ",
+      "https://www.youtube.com/watch?v=dDABgYxqRBs",
+      "https://www.youtube.com/watch?v=BUZNMMJHhV8",
+      "https://www.youtube.com/watch?v=4vtLpKlUjp8"
+    ];
+
+    const grid = document.getElementById("videoGrid");
+
+    videos.forEach(url => {
+      const videoId = url.split("v=")[1];
+
+      fetch(`https://www.youtube.com/oembed?url=${url}&format=json`)
+        .then(res => res.json())
+        .then(data => {
+          const card = document.createElement("a");
+          card.className = "video-card";
+          card.href = url;
+          card.target = "_blank";
+
+          card.innerHTML = `
+            <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg">
+            <div class="video-title">${data.title}</div>
+          `;
+
+          grid.appendChild(card);
+        })
+        .catch(() => {
+          const card = document.createElement("a");
+          card.className = "video-card";
+          card.href = url;
+          card.target = "_blank";
+
+          card.innerHTML = `
+            <img src="https://img.youtube.com/vi/${videoId}/maxresdefault.jpg">
+            <div class="video-title">영상 보기</div>
+          `;
+
+          grid.appendChild(card);
+        });
+    });
   </script>
 
 </body>
