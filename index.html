@@ -16,46 +16,80 @@
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #f5f5f5;
+      background: linear-gradient(180deg, #fff3ea 0%, #ffeef5 45%, #f7f3ff 100%);
       color: #111;
     }
 
     .container {
       max-width: 420px;
       margin: auto;
-      padding: 16px;
+      padding: 18px;
     }
 
     .hero {
-      background: linear-gradient(135deg, #ffe4ec, #fff7e6);
-      border-radius: 24px;
-      padding: 30px 16px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.9), transparent 28%),
+        linear-gradient(135deg, #ffdce8, #fff5dc);
+      border-radius: 28px;
+      padding: 38px 18px;
       text-align: center;
       margin-bottom: 20px;
+      box-shadow: 0 12px 28px rgba(120, 80, 80, 0.14);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -35px;
+      top: -35px;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
     }
 
     .hero h1 {
+      position: relative;
       margin: 0;
-      font-size: 32px;
-      font-weight: 800;
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1.25;
+      letter-spacing: -1px;
     }
 
     .hero span {
       display: block;
       font-size: 18px;
-      margin-top: 6px;
-      color: #666;
+      font-weight: 600;
+      margin-top: 8px;
+      color: #6f5f5f;
+      letter-spacing: 0;
     }
 
     .card {
-      background: white;
-      border-radius: 20px;
+      background: rgba(255,255,255,0.92);
+      border-radius: 22px;
       overflow: hidden;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 24px rgba(70, 50, 50, 0.11);
     }
 
     .section {
       padding: 16px;
+    }
+
+    .section-title {
+      display: inline-block;
+      margin: 0 0 12px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: #fff1f5;
+      color: #8a4b5d;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.2px;
     }
 
     img {
@@ -68,7 +102,7 @@
     .video-card,
     .group-preview-img {
       overflow: hidden;
-      border-radius: 12px;
+      border-radius: 14px;
     }
 
     .image-wrap img,
@@ -93,17 +127,26 @@
       display: block;
       text-decoration: none;
       color: black;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
     .btn {
-      background: black;
+      background: #111;
       color: white;
-      padding: 10px;
+      padding: 12px;
       text-align: center;
       text-decoration: none;
       display: block;
-      border-radius: 10px;
-      font-weight: bold;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .contact-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
     }
 
     .kakao-btn {
@@ -118,6 +161,23 @@
       padding: 0 16px 16px;
     }
 
+    .group-preview-img {
+      position: relative;
+    }
+
+    .page-label {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(0,0,0,0.68);
+      color: white;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 999px;
+      z-index: 2;
+    }
+
     .group-preview-img img {
       height: 180px;
       object-fit: cover;
@@ -127,9 +187,10 @@
     .sermon-video {
       width: 100%;
       aspect-ratio: 16/9;
-      border-radius: 12px;
+      border-radius: 14px;
       overflow: hidden;
       background: #000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
     iframe {
@@ -149,6 +210,8 @@
       z-index: 999;
       left: 0;
       top: 0;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
     .modal-content {
@@ -183,11 +246,12 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: black;
+      background: #111;
       color: white;
       border: none;
       font-size: 20px;
       cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25);
     }
   </style>
 </head>
@@ -204,7 +268,7 @@
 
     <div class="card">
       <div class="section">
-        <h3>다가올 전체모임</h3>
+        <h3 class="section-title">다가올 전체모임</h3>
       </div>
       <div class="image-wrap" onclick="openModal('images/poster.jpg')">
         <img src="images/poster.jpg" alt="다가올 전체모임 포스터">
@@ -212,12 +276,12 @@
     </div>
 
     <div class="card section">
-      <h3>지난 사역 돌아보기</h3>
+      <h3 class="section-title">지난 사역 돌아보기</h3>
       <div class="grid" id="videoGrid"></div>
     </div>
 
     <div class="card section">
-      <h3>이번 주 설교</h3>
+      <h3 class="section-title">이번 주 설교</h3>
       <div class="sermon-video">
         <iframe
           src="https://www.youtube.com/embed/videoseries?list=PLf7eFhhHay759LzayhGhfnf1EKK6GjNSJ"
@@ -228,37 +292,40 @@
 
     <div class="card">
       <div class="section">
-        <h3>이번주 셀 모임 나눔지</h3>
+        <h3 class="section-title">이번주 셀 모임 나눔지</h3>
       </div>
 
       <div class="group-preview">
         <div class="group-preview-img" onclick="openModal('images/group1.jpg')">
+          <span class="page-label">1쪽</span>
           <img src="images/group1.jpg" alt="나눔지 1">
         </div>
 
         <div class="group-preview-img" onclick="openModal('images/group2.jpg')">
+          <span class="page-label">2쪽</span>
           <img src="images/group2.jpg" alt="나눔지 2">
         </div>
       </div>
     </div>
 
     <div class="card section">
-      <h3>담당교역자 문의</h3>
+      <h3 class="section-title">담당교역자 문의</h3>
 
-      <p>
+      <p style="margin:0;">
         황지후 목사<br>
         010-9798-6947
       </p>
 
-      <a class="btn" href="tel:01097986947">전화하기</a>
+      <div class="contact-buttons">
+        <a class="btn" href="tel:01097986947">전화하기</a>
 
-      <a class="btn kakao-btn"
-         href="https://qr.kakao.com/talk/DYfdZ.5cvj0rMZYvXZOHLnIXGiU-"
-         target="_blank"
-         rel="noopener noreferrer"
-         style="margin-top:8px;">
-        카카오톡 문의
-      </a>
+        <a class="btn kakao-btn"
+           href="https://qr.kakao.com/talk/DYfdZ.5cvj0rMZYvXZOHLnIXGiU-"
+           target="_blank"
+           rel="noopener noreferrer">
+          카카오톡 문의
+        </a>
+      </div>
     </div>
 
   </div>
